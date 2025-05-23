@@ -1,0 +1,85 @@
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.product-image {
+    width: 100%;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+.product-meta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.product-title {
+    margin-bottom: 20px;
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    text-align: left;
+}
+.product-price {
+    margin-bottom: 20px;
+    font-family: 'NanumSquareRoundEB';
+    font-size: 20px;
+}
+.divider {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+.product-info {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+.info{
+    margin-top: 20px;
+    font-family: 'NanumSquareRoundEB';
+    font-size: 14px;
+}
+.content{
+    margin-top: 10px;
+    font-family: 'NanumSquareRound';
+    font-size: 12px;
+    img{
+        max-width: 100%;
+    }
+}
+.detail-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;               
+    max-width: 710px;      
+    margin: 0 auto;        
+    padding: 15px 20px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    z-index: 100;
+}
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.buy-button {
+    width: 48%;
+    background: black;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 20px;
+    font-family: 'NanumSquareRoundEB';
+    font-size: 14px;
+    cursor: pointer;
+}
+
+@import "../scss/res-marketon";

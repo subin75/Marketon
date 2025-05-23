@@ -1,0 +1,45 @@
+// ========================================아이패드========================================
+@media (min-width: 480px) and (max-width: 768px) {
+    .heart-icon2 {
+        bottom: 90px;
+        right: 5px;
+    }
+    .title2{
+        font-size: 22px;
+    }
+    .delivery-text {
+        font-size: 22px;
+    }
+    .question-title {
+        font-size: 22px;
+    }
+    .shopping-text {
+        font-size: 22px;
+    }
+}
+  // ========================================모바일========================================
+
+@media (max-width:480px){
+    .heart-icon2 {
+        bottom: 88px;
+        right: 4px;
+    }
+    .heart-icon {
+        bottom: 0px;
+    }
+    .title2{
+        font-size: 22px;
+    }
+    .delivery-text {
+        font-size: 22px;
+    }
+    .list-img{
+        height: 190px;
+    }
+    .shopping-text {
+        font-size: 22px;
+    }
+    .question-title {
+        font-size: 22px;
+    }
+}

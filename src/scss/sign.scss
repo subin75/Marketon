@@ -1,0 +1,49 @@
+.join{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    font-size: 25px;
+    font-family: 'NanumSquareRoundB';
+    color: #000;
+}
+.email{
+    margin-top: 130px;
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    color: #000;
+}
+.password{
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    color: #000;
+}
+.label {
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    color: #000;
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+.input {
+    width: 100%;
+    padding: 14px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'NanumSquareRound';
+    box-sizing: border-box;
+}
+.login {
+    width: 100%;
+    margin-top: 45px;
+    padding: 14px;
+    font-size: 14px;
+    font-family: 'NanumSquareRound';
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+@import "../scss/res-marketon";

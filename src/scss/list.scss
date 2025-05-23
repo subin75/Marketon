@@ -1,0 +1,59 @@
+.list-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.list-card {
+    position: relative;
+    background: #fff;
+    border-radius: 10px; 
+    overflow: hidden;
+}
+.list-img {
+    width: 100%;
+    height: 300px;         
+    object-fit: cover;     
+    border-radius: 10px;
+    display: block;
+}
+.list-info {
+    padding: 15px 0;
+}
+.list-title {
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.list-price {
+    font-family: 'NanumSquareRoundEB';
+    font-size: 14px;
+}
+.image-wrapper {
+    position: relative;
+}
+.heart-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 2;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.heart-icon2{
+    position: absolute;
+    bottom: 75px;
+    right: 5px;
+    z-index: 2;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@import "../scss/res-marketon";

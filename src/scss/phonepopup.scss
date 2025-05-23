@@ -1,0 +1,57 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.popup-box {
+    background-color: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+}
+.popup-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.phone-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+.phone-number {
+    font-family: 'NanumSquareRoundB';
+    font-size: 18px;
+}
+.popup-buttons {
+    display: flex;
+    gap: 10px;
+}
+.cancel-btn, .call-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'NanumSquareRound';
+    font-size: 14px;
+    cursor: pointer;
+}
+.cancel-btn {
+    background-color: white;
+    border: 1px solid #ccc;
+}
+.call-btn {
+    background-color: #555;
+    color: white;
+}
+
+@import "../scss/res-marketon";

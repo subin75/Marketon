@@ -1,0 +1,87 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 24px 30px;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 710px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  border: none;
+  background: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+.modal-title {
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+  margin: 20px 0;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 40px;
+  .minus-button,
+  .plus-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .quantity-number {
+    font-family: 'NanumSquareRoundEB';
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+  }
+}
+.modal-subtitle {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+  color: #000;
+}
+.modal-price {
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-family: 'NanumSquareRoundEB';
+  
+}
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.cart-button {
+  width: 48%;
+  padding: 15px 35px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #ddd;
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+}
+
+@import "../scss/res-marketon";

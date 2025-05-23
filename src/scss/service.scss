@@ -1,0 +1,68 @@
+.service{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 100px;
+    font-family: 'NanumSquareRoundB';
+    color: #000;
+    font-size: 25px;
+}
+.all-agree{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+}
+.agree-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 14px;
+    position: relative;
+}
+.agree-row.top-agree {
+    margin-bottom: 60px;
+}
+.agree-text {
+    flex: 1;
+    margin-top: 3px;
+    font-size: 14px;
+    font-family: 'NanumSquareRound';
+    color: #000;
+}
+.as-agree{
+    font-size: 14px;
+}
+.ch-agree{
+    font-size: 14px;
+}
+.see{
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'NanumSquareRound';
+}
+.next-button-wrapper {
+    width: 100%;
+    margin-top: 40px;
+}
+.next-button {
+    width: 100%;
+    padding: 16px;
+    font-size: 20px;
+    font-family: 'NanumSquareRound';
+    background-color: #fff;
+    color: #1277CA;
+    border: 1px solid #1277CA;
+    border-radius: 20px;
+    cursor: pointer;
+    &:disabled {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+        cursor: not-allowed;
+    }
+}
+
+@import "../scss/res-marketon";

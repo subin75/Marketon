@@ -1,0 +1,145 @@
+.header{
+  margin-top: 30px;
+}
+.title2 {
+  margin-top: 60px;
+  width: 100%;
+  text-align: center;
+  font-family: 'NanumSquareRoundB';
+  font-size: 25px;
+}
+.order-section {
+  margin-top: 65px;
+}
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-family: 'NanumSquareRound';
+}
+.label2{
+  font-family: 'NanumSquareRound';
+  font-size: 18px;
+}
+.count{
+  font-family: 'NanumSquareRound';
+  font-size: 18px;
+}
+.product-info2 {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+.product-info3 {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+.product-image3 {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+.product-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: -30px;
+}
+.name {
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+}
+.price {
+  margin-top: 20px;
+  font-family: 'NanumSquareRoundEB';
+  font-size: 20px;
+}
+.payment-summary {
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  padding-top: 30px;
+  margin-top: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding-bottom: 50px; 
+}
+.summary-label {
+  font-size: 18px;
+  font-family: 'NanumSquareRound';
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.item-label{
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+}
+.item-price{
+  font-family: 'NanumSquareRound';
+  font-size: 14px;
+}
+.agreement-section {
+  margin-top: 30px;
+}
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  font-family: 'NanumSquareRoundB';
+  font-size: 16px;
+}
+.checkbox-wrapper input {
+  margin-right: 8px;
+}
+.agreements {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  list-style: none;
+  padding: 0;
+}
+.agreements li {
+  display: flex;
+  align-items: center;
+  font-family: 'NanumSquareRound';
+  margin-bottom: 8px;
+  gap: 15px;
+}
+.agreements li svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.agreement-toggle {
+  display: flex;
+  align-items: center;
+  font-family: 'NanumSquareRoundB';
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  gap: 15px
+}
+.agreement-toggle svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.pay-button {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 14px;
+  border-radius: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'NanumSquareRoundB';
+}
+.pay-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  margin-bottom: 20px;
+}
+
+@import "../scss/res-marketon";

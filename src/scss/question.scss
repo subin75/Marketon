@@ -1,0 +1,41 @@
+.question{
+    margin-top: 30px;
+}
+.question-title {
+    margin-top: 30px;
+    margin-bottom: 45px;
+    text-align: center;
+    font-size: 25px;
+    font-family: "NanumSquareRoundB";
+}
+.faq-item {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+.faq-question {
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    font-size: 16px;
+    font-family: 'NanumSquareRound';
+}
+.faq-answer {
+    padding: 12px 16px;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    font-size: 12px;
+    font-family: 'NanumSquareRound';
+    white-space: pre-line;
+    border-radius: 10px;
+}
+.arrow {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+@import "../scss/res-marketon";

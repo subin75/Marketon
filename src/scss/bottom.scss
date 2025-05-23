@@ -1,0 +1,24 @@
+.bottom-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 708px;
+  background-color: white;
+  z-index: 1000;
+}
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  border-top: 1px solid #ddd;
+}
+.bottom-item {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+@import "../scss/res-marketon";

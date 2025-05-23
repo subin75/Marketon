@@ -1,0 +1,25 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.cancel-popup {
+  width: 260px;
+  padding: 18px 0;
+  background-color: white;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+  font-family: 'NanumSquareRound';;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+@import "../scss/res-marketon";
