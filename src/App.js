@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
+import Splash from './Popup/Splash';
 import Login from './Login/login';
 import Login2 from './Login/Login2';
 import Kakao from './Login/Kakao';
@@ -28,6 +29,7 @@ function App() {
     <Router>
         <Routes>
           <Route path='/' element={<Login/>}/>
+          <Route path='/Popup/Splash' element={<Splash/>}/>
           <Route path='/login2' element={<Login2/>}/>
           <Route path='/Login/Kakao' element={<Kakao />} />
           <Route path='/Agree/Service' element={<Service/>}/>

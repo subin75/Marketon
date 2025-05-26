@@ -75,6 +75,7 @@ const Payment = () => {
       date: todayStr
     }));
 
+    // 🔽 서버로 주문 저장 요청
     fetch(`${process.env.REACT_APP_URL}save_order.php`, {
       method: "POST",
       headers: {
@@ -88,8 +89,6 @@ const Payment = () => {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          console.log('서버 응답 데이터:', data);
-
           const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
           const ordersWithDate = orders.map(item => ({
@@ -140,7 +139,11 @@ const Payment = () => {
         {orders.map((item, index) => (
           <div className="product-info3" key={index}>
             {item.img && (
-              <img src={`${process.env.REACT_APP_IMGPATH}${item.img}`} alt={item.name} className="product-image3" />
+              <img
+                src={`${process.env.REACT_APP_IMGPATH}${item.img}`}
+                alt={item.name}
+                className="product-image3"
+              />
             )}
             <div className="product-details">
               <div className="name">{item.name}</div>
