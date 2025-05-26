@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
 import Login from './Login/login';
 import Login2 from './Login/Login2';
+import Kakao from './Login/Kakao';
 import Service from './Agree/Service';
 import See from './Agree/See';
 import See2 from './Agree/See2';
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/login2' element={<Login2/>}/>
+          <Route path='/Login/Kakao' element={<Kakao />} />
           <Route path='/Agree/Service' element={<Service/>}/>
           <Route path='/Agree/See' element={<See/>}/>
           <Route path='/Agree/See2' element={<See2/>}/>

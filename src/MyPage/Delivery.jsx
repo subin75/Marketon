@@ -96,7 +96,7 @@ const Delivery = () => {
             </div>
             <div className="delivery-right">
               <div className="delivery-name">{order.name}</div>
-              <div className="delivery-price">{order.price}원</div>
+              <div className="delivery-price">{Number(order.price).toLocaleString()}원</div>
               {order.cancellable && isWithin3Days(order.date) && (
                 <div className="delivery-cancel" onClick={() => handleCancel(index)}>
                   주문취소

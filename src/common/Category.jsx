@@ -18,7 +18,7 @@ const Category = ({ onCategoryChange }) => {
     const [activeCategory, setActiveCategory] = useState('전체');
     
     useEffect(() => {
-        axios.get('http://subin01.dothome.co.kr/admin/api/category.php')
+        axios.get(`${process.env.REACT_APP_URL}/category.php`)
         .then((res) => {
             const filtered = res.data
             .filter(item => CATEGORY_MAP[item.cat_parent])

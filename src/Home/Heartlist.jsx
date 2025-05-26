@@ -75,7 +75,7 @@ const HeartList = () => {
                   onClick={() => handleProductClick(product.id)}
                 >
                   <img
-                    src={`http://subin01.dothome.co.kr/admin/product/upload/${sumnal}`}
+                    src={`${process.env.REACT_APP_IMGPATH}${sumnal}`}
                     className="list-img"
                     alt={product.p_name}
                   />

@@ -17,6 +17,10 @@ const Login = () => {
     navigate('/login2');
   };
 
+  const handleKakaoClick = () => {
+    navigate('/Login/Kakao');
+  };
+
   return (
     <div className="login-container">
       <div className="logo">
@@ -28,7 +32,7 @@ const Login = () => {
         <네이버로그인 />
       </div>
 
-      <div className="login-btn kakao">
+      <div className="login-btn kakao" onClick={handleKakaoClick}>
         <카카오로그인 />
       </div>
 

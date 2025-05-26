@@ -71,7 +71,7 @@ const Detail = () => {
 
       <div className="detail-container">
         <img
-          src={`http://subin01.dothome.co.kr/admin/product/upload/${image}`}
+          src={process.env.REACT_APP_IMGPATH + image}
           className="product-image"
           alt={product.p_name}
         />

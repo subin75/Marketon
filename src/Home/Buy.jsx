@@ -46,7 +46,7 @@ const Buy = ({ onClose, p_id }) => {
       unitPrice,
       price: `${(unitPrice * quantity).toLocaleString()}원`,
       img: product.p_thumb
-        ? `http://subin01.dothome.co.kr/admin/product/upload/${product.p_thumb.split(',')[0]}`
+        ? `${process.env.REACT_APP_IMGPATH}${product.p_thumb.split(',')[0]}`
         : '',
     };
 
@@ -68,7 +68,7 @@ const Buy = ({ onClose, p_id }) => {
       price: `${(unitPrice * quantity).toLocaleString()}원`,
       unitPrice,
       img: product.p_thumb
-        ? `http://subin01.dothome.co.kr/admin/product/upload/${product.p_thumb.split(',')[0]}`
+        ? `${process.env.REACT_APP_IMGPATH}${product.p_thumb.split(',')[0]}`
         : '',
       quantity,
       cancellable: true,
