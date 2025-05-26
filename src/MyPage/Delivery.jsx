@@ -92,7 +92,7 @@ const Delivery = () => {
           <div className="delivery-date">{order.date}</div>
           <div className="delivery-body">
             <div className="delivery-left">
-              <img src={order.img} className="delivery-img" alt={order.name} />
+              <img src={`${process.env.REACT_APP_IMGPATH}${order.img}`}  className="delivery-img" alt={order.name} />
             </div>
             <div className="delivery-right">
               <div className="delivery-name">{order.name}</div>

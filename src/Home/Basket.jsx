@@ -128,7 +128,7 @@ const Basket = () => {
             </div>
 
             {item.img && (
-              <img src={item.img} className="product-image2" alt={item.name} />
+              <img src={`${process.env.REACT_APP_IMGPATH}${item.img}`} className="product-image2" alt={item.name} />
             )}
 
             <div className="product-details2">
