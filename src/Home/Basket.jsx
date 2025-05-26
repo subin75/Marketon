@@ -126,6 +126,7 @@ const Basket = () => {
                 <Close />
               </div>
             </div>
+             {console.log("이미지 경로:", `${process.env.REACT_APP_IMGPATH}${item.img}`)}
 
             {item.img && (
               <img src={`${process.env.REACT_APP_IMGPATH}${item.img}`} className="product-image2" alt={item.name} />
