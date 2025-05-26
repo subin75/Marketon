@@ -41,7 +41,7 @@ const Seeshopping = () => {
               <div className="image-wrapper">
                 <img
                   className="list-img"
-                  src={`http://subin01.dothome.co.kr/admin/product/upload/${item.thumb}`}
+                  src={`${process.env.REACT_APP_IMGPATH}${item.thumb}`}
                   alt={item.name}
                 />
               </div>

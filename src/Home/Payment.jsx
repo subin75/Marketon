@@ -89,7 +89,6 @@ const Payment = () => {
       .then(data => {
         if (data.success) {
           console.log('서버 응답 데이터:', data);
-          console.log("서버 응답:", data.message);
 
           const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
