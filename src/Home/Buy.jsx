@@ -13,7 +13,7 @@ const Buy = ({ onClose, p_id }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://subin01.dothome.co.kr/admin/api/p_list.php')
+    fetch(`${process.env.REACT_APP_URL}p_list.php`)
       .then(res => res.json())
       .then(data => {
         
@@ -73,9 +73,10 @@ const Buy = ({ onClose, p_id }) => {
       quantity,
       cancellable: true,
     };
-    axios.post("http://subin01.dothome.co.kr/admin/api/save_cart.php",newCartItem)
-    .then(res=>{console.log(res.data);
-    })
+    axios.post(`${process.env.REACT_APP_URL}save_cart.php`, newCartItem)
+    .then(res => {
+    console.log(res.data);
+  });
 
     setShowPopup(true);
     setTimeout(() => {

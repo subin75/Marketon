@@ -75,7 +75,7 @@ const Payment = () => {
       date: todayStr
     }));
 
-    fetch("http://subin01.dothome.co.kr/admin/api/save_order.php", {
+    fetch(`${process.env.REACT_APP_URL}save_order.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -49,8 +49,7 @@ const Login2 = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://subin01.dothome.co.kr/admin/api/member.php?email=${email}&pw=${password}`);
-
+      const response = await fetch(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`);
       const data = await response.json();
       console.log(data)
 

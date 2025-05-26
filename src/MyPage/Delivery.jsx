@@ -16,7 +16,7 @@ const Delivery = () => {
       navigate("/login");
       return;
     }
-    axios.post('http://subin01.dothome.co.kr/admin/api/save_order.php', { userEmail })
+    axios.post(`${process.env.REACT_APP_URL}save_order.php`, { userEmail })
       .then(res => {
         const formattedOrders = res.data.map(order => ({
           id: order.id,

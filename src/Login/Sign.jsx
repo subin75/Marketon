@@ -16,7 +16,7 @@ const Sign = () => {
       formData.append('email', email);
       formData.append('password', password);
 
-      const response = await fetch("http://subin01.dothome.co.kr/admin/api/member.php", {
+      const response = await fetch(`${process.env.REACT_APP_URL}member.php`, {
         method: "POST",
         body: formData,
         credentials: 'include',

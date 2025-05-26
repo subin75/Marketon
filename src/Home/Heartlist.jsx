@@ -18,11 +18,11 @@ const HeartList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://subin01.dothome.co.kr/admin/api/p_list.php')
+    axios.get(`${process.env.REACT_APP_URL}p_list.php`)
       .then(res => setProducts(res.data))
       .catch(err => console.error('상품 불러오기 실패:', err));
 
-    axios.get('http://subin01.dothome.co.kr/admin/api/category.php')
+    axios.get(`${process.env.REACT_APP_URL}category.php`)
       .then(res => setCategories(res.data))
       .catch(err => console.error('카테고리 불러오기 실패:', err));
   }, []);

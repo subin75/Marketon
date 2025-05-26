@@ -20,7 +20,11 @@ const Basket = () => {
       return;
     }
 
-    axios.get(`http://subin01.dothome.co.kr/admin/api/save_cart.php?user=${encodeURIComponent(loggedInUser)}`)
+    axios.get(`${process.env.REACT_APP_URL}save_cart.php`, {
+      params: {
+        user: loggedInUser
+      }
+    })
       .then(res => {
         const serverData = res.data || [];
         const itemsWithCheck = serverData.map(item => ({
@@ -57,11 +61,11 @@ const Basket = () => {
       return;
     }
 
-    axios.post('http://subin01.dothome.co.kr/admin/api/save_cart.php', {
-      action: 'delete',
-      id: itemToRemove.id,
-      user: loggedInUser,
-    })
+    axios.post(`${process.env.REACT_APP_URL}save_cart.php`, {
+  action: 'delete',
+  id: itemToRemove.id,
+  user: loggedInUser,
+})
     .then(res => {
       if (res.data.success) {
         const updated = cartItems.filter((_, i) => i !== index);

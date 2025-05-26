@@ -15,7 +15,7 @@ const Detail = () => {
   const [showBuyModal, setShowBuyModal] = useState(false);
 
   useEffect(() => {
-    axios.get("http://subin01.dothome.co.kr/admin/api/p_list.php")
+    axios.get(`${process.env.REACT_APP_URL}p_list.php`)
       .then((res) => {
         const found = res.data.find((item) => item.id == id);
         setProduct(found);

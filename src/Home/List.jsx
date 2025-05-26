@@ -24,13 +24,13 @@ const List = () => {
   const query = params.get('query');
 
   useEffect(() => {
-    axios.get('http://subin01.dothome.co.kr/admin/api/category.php')
+    axios.get(`${process.env.REACT_APP_URL}category.php`)
       .then(res => setCategories(res.data))
       .catch(err => console.error('카테고리 불러오기 실패:', err));
   }, []);
 
   useEffect(() => {
-    axios.get('http://subin01.dothome.co.kr/admin/api/p_list.php')
+    axios.get(`${process.env.REACT_APP_URL}p_list.php`)
       .then(res => {
         setProducts(res.data);
         setFilteredProducts(res.data);
