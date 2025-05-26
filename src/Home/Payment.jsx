@@ -75,7 +75,7 @@ const Payment = () => {
       date: todayStr
     }));
 
-    fetch(`${process.env.REACT_APP_URL}/save_order.php`, {
+    fetch(`${process.env.REACT_APP_URL}save_order.php`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -88,6 +88,7 @@ const Payment = () => {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
+          console.log('서버 응답 데이터:', data);
           console.log("서버 응답:", data.message);
 
           const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
