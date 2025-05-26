@@ -4,11 +4,14 @@ import Shopping from "../Icon/Shopping";
 import Truck from "../Icon/Truck";
 import Bottom from "../common/Bottom";
 import PhonePopup from "../Popup/PhonePopup";
+import Logout from "../Popup/Logout";
 import "../scss/mypage.scss";
 
 const Mypage = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPhonePopup, setShowPhonePopup] = useState(false);
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const [email, setEmail] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,18 +19,24 @@ const Mypage = () => {
     if (storedEmail) {
       const nameOnly = storedEmail.split("@")[0];
       setEmail(nameOnly);
+      setIsLoggedIn(true);
     } else {
-      navigate("/login");
+      setIsLoggedIn(false);
     }
-  }, [navigate]);
+  }, []);
 
-  const goToSeeShopping = () => navigate("/Mypage/Seeshopping");
-  const goToFAQ = () => navigate("/Mypage/Question");
-  const goToDelivery = () => navigate("/Mypage/Delivery");
-  const goToBasket = () => navigate("/Home/Basket");
+  if (isLoggedIn === null) {
+    return null;
+  }
 
-  const handleCall = () => {
-    window.location.href = "tel:02-1235-1237";
+  const handleLogoutClick = () => {
+    localStorage.removeItem("userEmail");
+    setIsLoggedIn(false);
+    setEmail("");
+    setShowLogoutPopup(true);
+    setTimeout(() => {
+      setShowLogoutPopup(false);
+    }, 2000);
   };
 
   return (
@@ -35,7 +44,7 @@ const Mypage = () => {
       <div className="header">
         <div
           className="top-icons"
-          onClick={goToBasket}
+          onClick={() => navigate("/Home/Basket")}
           style={{ cursor: "pointer" }}
         >
           <Shopping />
@@ -43,41 +52,60 @@ const Mypage = () => {
       </div>
 
       <div className="greeting-section">
-        <div className="greeting-text">
-          {email ? `${email}님 안녕하세요!` : "안녕하세요!"}
-        </div>
-        <div className="truck-icon" onClick={goToDelivery}>
-          <Truck />
-          <span className="truck-text">주문·배송</span>
-        </div>
+        {isLoggedIn ? (
+          <>
+            <div className="greeting-text">
+              {email ? `${email}님 안녕하세요!` : "안녕하세요!"}
+            </div>
+            <div
+              className="truck-icon"
+              onClick={() => navigate("/Mypage/Delivery")}
+              style={{ cursor: "pointer" }}
+            >
+              <Truck />
+              <span className="truck-text">주문·배송</span>
+            </div>
+          </>
+        ) : (
+          <div
+            className="greeting-text"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/Login/login")}
+          >
+            로그인해주세요!
+          </div>
+        )}
       </div>
 
       <div className="section">
         <div className="section-title">쇼핑</div>
-        <div className="section-item recent-product" onClick={goToSeeShopping}>
+        <div
+          className="section-item recent-product"
+          onClick={() => navigate("/Mypage/Seeshopping")}
+        >
           최근 본 상품
         </div>
       </div>
 
       <div className="section">
         <div className="section-title">고객센터</div>
-        <div className="section-item" onClick={goToFAQ}>
+        <div className="section-item" onClick={() => navigate("/Mypage/Question")}>
           자주 묻는 질문
         </div>
-        <div className="section-item call" onClick={() => setShowPopup(true)}>
+        <div className="section-item call" onClick={() => setShowPhonePopup(true)}>
           전화걸기
         </div>
       </div>
 
-      <div
-        className="logout"
-        onClick={() => {
-          localStorage.removeItem("userEmail");
-          navigate("/login");
-        }}
-      >
-        로그아웃
-      </div>
+      {isLoggedIn && (
+        <div
+          className="logout"
+          onClick={handleLogoutClick}
+          style={{ cursor: "pointer" }}
+        >
+          로그아웃
+        </div>
+      )}
 
       <div className="company-info">
         <div className="info-title">(주)마켓온 사업자 정보</div>
@@ -101,13 +129,17 @@ const Mypage = () => {
         </div>
       </div>
 
-      {showPopup && (
+      {showPhonePopup && (
         <PhonePopup
           phoneNumber="02-1235-1237"
-          onCancel={() => setShowPopup(false)}
-          onCall={handleCall}
+          onCancel={() => setShowPhonePopup(false)}
+          onCall={() => {
+            window.location.href = "tel:02-1235-1237";
+          }}
         />
       )}
+
+      {showLogoutPopup && <Logout />}
 
       <Bottom />
     </div>

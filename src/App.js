@@ -21,23 +21,22 @@ import Delivery from './MyPage/Delivery';
 import Cancle from './MyPage/Cancle';
 import Seeshopping from './MyPage/Seeshopping';
 import Question from './MyPage/Question';
-import NotLogin from './MyPage/NotLogin';
 import axios from 'axios'
 
 function App() {
   return (
     <Router>
         <Routes>
-          <Route path='/' element={<Login/>}/>
-          <Route path='/Popup/Splash' element={<Splash/>}/>
+          <Route path='/' element={<Splash/>}/>
+          <Route path='/Login/login' element={<Login/>}/>
           <Route path='/login2' element={<Login2/>}/>
           <Route path='/Login/Kakao' element={<Kakao />} />
+          <Route path='/Login/Sign' element={<Sign/>}/>
           <Route path='/Agree/Service' element={<Service/>}/>
           <Route path='/Agree/See' element={<See/>}/>
           <Route path='/Agree/See2' element={<See2/>}/>
           <Route path='/Agree/See3' element={<See3/>}/>
           <Route path='/Agree/See4' element={<See4/>}/>
-          <Route path='/Login/Sign' element={<Sign/>}/>
           <Route path='/Home/List' element={<List/>}/>
           <Route path='/Home/Heartlist' element={<Heartlist/>}/>
           <Route path='/detail/:id' element={<Detail/>}/>
@@ -50,7 +49,6 @@ function App() {
           <Route path='/Mypage/Cancle' element={<Cancle/>}/>
           <Route path='/Mypage/Seeshopping' element={<Seeshopping/>}/>
           <Route path='/Mypage/Question' element={<Question/>}/>
-          <Route path='/Mypage/NotLogin' element={<NotLogin/>}/>
         </Routes>
       </Router>
   );

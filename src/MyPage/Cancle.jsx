@@ -20,18 +20,56 @@ const Cancle = () => {
     "다른 상품과 같이 재주문 할거예요"
   ];
 
-  const handleCancel = () => {
+  const formatPrice = (price) => {
+    if (!price) return '';
+    const num = typeof price === 'number' ? price : Number(price.toString().replace(/[^0-9.-]+/g,""));
+    if (isNaN(num)) return price;
+    return num.toLocaleString('ko-KR') + '원';
+  };
+
+  const handleCancel = async () => {
     if (selectedReason && order) {
       setShowPopup(true);
 
-      // 주문 내역에서 해당 주문 삭제
+      // 클라이언트 localStorage에서 삭제
       const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
       const updatedOrders = storedOrders.filter(
         (item) =>
           !(item.date === order.date && item.name === order.name && item.price === order.price)
       );
       localStorage.setItem('orders', JSON.stringify(updatedOrders));
-      
+
+      try {
+        const response = await fetch(`${process.env.REACT_APP_URL}save_order.php`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userEmail: order.user, 
+            deleteOrder: {          
+              date: order.date,
+              name: order.name,
+              price: order.price,
+            },
+          }),
+        });
+
+        const result = await response.json();
+        console.log("서버 삭제 응답:", result);
+        if (!result.success) {
+          console.error("서버 삭제 실패:", result.message);
+          alert("주문 삭제 실패: " + result.message);
+          setShowPopup(false);
+          return;
+        }
+      } catch (error) {
+        console.error("서버 삭제 요청 중 오류:", error);
+        alert("서버와 통신 중 오류가 발생했습니다.");
+        setShowPopup(false);
+        return;
+      }
+
       setTimeout(() => {
         setShowPopup(false);
         navigate("/Home/List");
@@ -59,12 +97,16 @@ const Cancle = () => {
       <div className="cancle-text">주문취소</div>
 
       <div className="cancel-product">
-        <img src={order.img} className="cancel-img" alt={order.name} />
+        <img
+          src={`${process.env.REACT_APP_IMGPATH}${order.img}`}
+          className="cancel-img"
+          alt={order.name}
+        />
         <div className="cancel-info">
           <div className="cancel-name">
             {order.name} <span>{order.quantity || 1}개</span>
           </div>
-          <div className="cancel-price">{order.price}</div>
+          <div className="cancel-price">{formatPrice(order.price)}</div>
         </div>
       </div>
 
@@ -86,7 +128,7 @@ const Cancle = () => {
         <div className="refund-title">취소 / 환불 정보</div>
         <div className="refund-row">
           <span>총 결제금액</span>
-          <span>{order.price}</span>
+          <span>{formatPrice(order.price)}</span>
         </div>
       </div>
 

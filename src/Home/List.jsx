@@ -18,6 +18,9 @@ const List = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // localStorage에서 로그인된 사용자 ID 가져오기
+  const loggedInUser = localStorage.getItem('userEmail') || '';
+
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -70,17 +73,39 @@ const List = () => {
     return () => window.removeEventListener('storage', syncLikedItems);
   }, []);
 
-  const toggleLike = (id) => {
-    setLikedItems(prev => {
-      let updated;
-      if (prev.includes(id)) {
-        updated = prev.filter(item => item !== id);
+  // 서버에 좋아요 토글 요청
+  const toggleLike = (product) => {
+    const id = product.id;
+    const sumnal = product.p_thumb ? product.p_thumb.split(',')[0] : '';
+
+    axios.post(`${process.env.REACT_APP_URL}get_likes.php`, {
+      user: loggedInUser,
+      productId: id,
+      product_name: product.p_name,
+      unit_price: product.p_price,
+      img_url: `${process.env.REACT_APP_IMGPATH}${sumnal}`
+    })
+    .then(res => {
+      if(res.data.success) {
+        // 서버 성공 시 로컬스토리지도 업데이트
+        setLikedItems(prev => {
+          let updated;
+          if (prev.includes(id)) {
+            updated = prev.filter(item => item !== id);
+          } else {
+            updated = [...prev, id];
+          }
+          localStorage.setItem('likedItems', JSON.stringify(updated));
+          window.dispatchEvent(new Event('storage'));
+          return updated;
+        });
       } else {
-        updated = [...prev, id];
+        alert("좋아요 처리 실패: " + res.data.message);
       }
-      localStorage.setItem('likedItems', JSON.stringify(updated));
-      window.dispatchEvent(new Event('storage'));
-      return updated;
+    })
+    .catch(err => {
+      console.error("좋아요 요청 실패:", err);
+      alert("서버 요청 중 오류가 발생했습니다.");
     });
   };
 
@@ -124,7 +149,7 @@ const List = () => {
                     style={query ? { marginTop: '30px' } : {}}
                     onClick={() => handleProductClick(product, sumnal)}
                   />
-                  <div className="heart-icon" onClick={() => toggleLike(product.id)}>
+                  <div className="heart-icon" onClick={() => toggleLike(product)}>
                     {isLiked ? <Fe_heart /> : <Heart />}
                   </div>
                 </div>

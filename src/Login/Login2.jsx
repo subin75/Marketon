@@ -53,7 +53,7 @@ const Login2 = () => {
       const data = await response.json();
 
       if (data.status === "success" && data.user?.u_email) {
-        localStorage.setItem("userEmail", data.user.u_email);  // 로그인 성공 이메일 저장
+        localStorage.setItem("userEmail", data.user.u_email); 
         setShowLoginPopup(true);
       } else if (data.message === "패스워드가 틀렸습니다.") {
         setShowPwPopup(true);
@@ -64,7 +64,6 @@ const Login2 = () => {
       }
 
     } catch  {
-      // console.error("로그인 요청 중 오류:", error);
       alert("로그인 중 오류가 발생했습니다.");
     }
   };

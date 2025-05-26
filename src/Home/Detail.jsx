@@ -28,21 +28,33 @@ const Detail = () => {
       });
   }, [id]);
 
+  // 다른 탭/컴포넌트에서 좋아요 변경 시 상태 동기화
+  useEffect(() => {
+    const syncLiked = () => {
+      const likedIds = JSON.parse(localStorage.getItem('likedItems') || '[]');
+      setLiked(likedIds.includes(Number(id)));
+    };
+
+    window.addEventListener('storage', syncLiked);
+    return () => window.removeEventListener('storage', syncLiked);
+  }, [id]);
+
   const toggleLike = () => {
     setLiked((prev) => {
       const newLiked = !prev;
       let likedIds = JSON.parse(localStorage.getItem('likedItems') || '[]');
 
+      const numericId = Number(id);
+
       if (newLiked) {
-        if (!likedIds.includes(Number(id))) {
-          likedIds.push(Number(id));
+        if (!likedIds.includes(numericId)) {
+          likedIds.push(numericId);
         }
       } else {
-        likedIds = likedIds.filter((item) => item !== Number(id));
+        likedIds = likedIds.filter((item) => item !== numericId);
       }
 
       localStorage.setItem('likedItems', JSON.stringify(likedIds));
-
       window.dispatchEvent(new Event('storage'));
 
       return newLiked;

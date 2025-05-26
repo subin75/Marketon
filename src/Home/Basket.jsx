@@ -4,47 +4,44 @@ import axios from 'axios';
 import Close from "../Icon/Close";
 import Check from "../Icon/Check";
 import Nocheck from "../Icon/Nocheck";
+import Loginpl from "../Popup/Loginpl"; // 추가
 import "../scss/basket.scss";
 
 const Basket = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [showLoginPopup, setShowLoginPopup] = useState(false); // 추가
   const navigate = useNavigate();
-
-  // userEmail을 로그인 사용자 식별자로 사용
   const loggedInUser = localStorage.getItem('userEmail') || '';
 
   useEffect(() => {
     if (!loggedInUser) {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
+      setShowLoginPopup(true); // alert 대신 팝업 표시
       return;
     }
 
     axios.get(`${process.env.REACT_APP_URL}save_cart.php`, {
-      params: {
-        user: loggedInUser
-      }
+      params: { user: loggedInUser }
     })
-      .then(res => {
-        const serverData = res.data || [];
-        const itemsWithCheck = serverData.map(item => ({
-          ...item,
-          name: item.product_name,
-          img: item.img_url, 
-          unitPrice: Number(item.unit_price), 
-          quantity: Number(item.quantity),         
-          checked: true,
-          id: item.id,
-        }));
-        setCartItems(itemsWithCheck);
-        localStorage.setItem('cart', JSON.stringify(itemsWithCheck));
-      })
-      .catch(err => {
-        console.error('서버에서 장바구니 불러오기 실패', err);
-        const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-        setCartItems(savedCart);
-      });
-  }, [loggedInUser, navigate]);
+    .then(res => {
+      const serverData = res.data || [];
+      const itemsWithCheck = serverData.map(item => ({
+        ...item,
+        name: item.product_name,
+        img: item.img_url,
+        unitPrice: Number(item.unit_price),
+        quantity: Number(item.quantity),
+        checked: true,
+        id: item.id,
+      }));
+      setCartItems(itemsWithCheck);
+      localStorage.setItem('cart', JSON.stringify(itemsWithCheck));
+    })
+    .catch(err => {
+      console.error('서버에서 장바구니 불러오기 실패', err);
+      const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartItems(savedCart);
+    });
+  }, [loggedInUser]);
 
   const toggleCheck = (index) => {
     setCartItems(prev =>
@@ -62,10 +59,10 @@ const Basket = () => {
     }
 
     axios.post(`${process.env.REACT_APP_URL}save_cart.php`, {
-  action: 'delete',
-  id: itemToRemove.id,
-  user: loggedInUser,
-})
+      action: 'delete',
+      id: itemToRemove.id,
+      user: loggedInUser,
+    })
     .then(res => {
       if (res.data.success) {
         const updated = cartItems.filter((_, i) => i !== index);
@@ -80,8 +77,6 @@ const Basket = () => {
       alert('삭제 요청 중 오류가 발생했습니다.');
     });
   };
-
-  if (cartItems.length === 0) return <div>장바구니에 담긴 상품이 없습니다.</div>;
 
   const totalPrice = cartItems.reduce((sum, item) => {
     if (!item.checked) return sum;
@@ -100,6 +95,12 @@ const Basket = () => {
   const handleCloseClick = () => {
     navigate(-1);
   };
+
+  if (showLoginPopup) {
+    return <Loginpl onCancel={() => setShowLoginPopup(false)} />;
+  }
+
+  if (cartItems.length === 0) return <div>장바구니에 담긴 상품이 없습니다.</div>;
 
   return (
     <div className="body">

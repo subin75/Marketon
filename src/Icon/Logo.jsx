@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Activity({ className }) {
+function Activity({className}) {
   return (
-    <div className={className} style={{ backgroundColor: ' transparent' }}>
-      <img src='/imgs/logo.svg' alt="logo" />
+    <div className={className}>
+      <img src='/imgs/logo.svg'/>
     </div>
   )
 }
