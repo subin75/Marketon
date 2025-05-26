@@ -64,8 +64,8 @@ const Login2 = () => {
         alert("로그인 실패: " + (data.message || "알 수 없는 오류"));
       }
 
-    } catch (error) {
-      console.error("로그인 요청 중 오류:", error);
+    } catch  {
+      // console.error("로그인 요청 중 오류:", error);
       alert("로그인 중 오류가 발생했습니다.");
     }
   };
