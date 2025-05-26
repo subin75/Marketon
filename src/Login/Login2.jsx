@@ -48,25 +48,20 @@ const Login2 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   const response = await fetch(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`);
-      const data = await response.json();
-        console.log(data)
-
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`);
       const data = await response.json();
-      console.log(data)
 
-      // if (data.status === "success" && data.user?.u_email) {
-      //   localStorage.setItem("userEmail", data.user.u_email);  // 로그인 성공 이메일 저장
-      //   setShowLoginPopup(true);
-      // } else if (data.message === "패스워드가 틀렸습니다.") {
-      //   setShowPwPopup(true);
-      // } else if (data.message === "아이디가 틀렸습니다.") {
-      //   setShowIdPopup(true);
-      // } else {
-      //   alert("로그인 실패: " + (data.message || "알 수 없는 오류"));
-      // }
+      if (data.status === "success" && data.user?.u_email) {
+        localStorage.setItem("userEmail", data.user.u_email);  // 로그인 성공 이메일 저장
+        setShowLoginPopup(true);
+      } else if (data.message === "패스워드가 틀렸습니다.") {
+        setShowPwPopup(true);
+      } else if (data.message === "아이디가 틀렸습니다.") {
+        setShowIdPopup(true);
+      } else {
+        alert("로그인 실패: " + (data.message || "알 수 없는 오류"));
+      }
 
     } catch  {
       // console.error("로그인 요청 중 오류:", error);
