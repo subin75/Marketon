@@ -48,7 +48,9 @@ const Login2 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`)
+   const response = await fetch(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`);
+      const data = await response.json();
+        console.log(data)
 
     try {
       const response = await fetch(`${process.env.REACT_APP_URL}member.php?email=${email}&pw=${password}`);
