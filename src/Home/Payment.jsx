@@ -140,7 +140,7 @@ const Payment = () => {
         {orders.map((item, index) => (
           <div className="product-info3" key={index}>
             {item.img && (
-              <img src={item.img} alt={item.name} className="product-image3" />
+              <img src={`${process.env.REACT_APP_IMGPATH}${item.img}`} alt={item.name} className="product-image3" />
             )}
             <div className="product-details">
               <div className="name">{item.name}</div>
