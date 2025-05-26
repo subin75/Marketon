@@ -68,7 +68,7 @@ const Buy = ({ onClose, p_id }) => {
       price: `${(unitPrice * quantity).toLocaleString()}원`,
       unitPrice,
       img: product.p_thumb
-        ? `${process.env.REACT_APP_IMGPATH}${product.p_thumb.split(',')[0]}`
+        ? `${product.p_thumb.split(',')[0]}`
         : '',
       quantity,
       cancellable: true,
