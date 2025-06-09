@@ -14,7 +14,7 @@ const Kakao = () => {
         if (!window.Kakao.isInitialized()) {
           window.Kakao.init('e6dccb8d55403a16fb1c853f82164bfb');
         }
-        loginWithKakao(); // SDK 로드 및 초기화 후 로그인 시도
+        loginWithKakao();
       }
     };
 
@@ -25,26 +25,41 @@ const Kakao = () => {
     document.head.appendChild(script);
   }, []);
 
-  const loginWithKakao = () => {
-    if (!window.Kakao) {
-      return;
-    }
+  const loginWithKakao = async () => {
+    if (!window.Kakao) return;
 
     window.Kakao.Auth.login({
       scope: 'profile_nickname', // 이메일 권한 제거
       success: function (authObj) {
         window.Kakao.API.request({
           url: '/v2/user/me',
-          success: function (res) {
-            const nickname = res.kakao_account?.profile?.nickname;
+          success: async function (res) {
+            try {
+              const nickname = res.kakao_account?.profile?.nickname;
+              alert(`환영합니다, ${nickname}`);
 
-            alert(`환영합니다, ${nickname}`);
+              // 서버에 닉네임 저장 요청
+              const response = await fetch(`${process.env.REACT_APP_URL}member.php`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nickname }),
+              });
 
-            // 로그인 성공 시 닉네임 localStorage 저장
-            localStorage.setItem('userNickname', nickname);
+              if (!response.ok) {
+                throw new Error('서버 저장 실패');
+              }
 
-            // 로그인 성공 시 list 페이지로 이동
-            navigate('/Home/List');
+              // localStorage 저장
+              localStorage.setItem('userNickname', nickname);
+
+              // 로그인 성공 후 페이지 이동
+              navigate('/Home/List');
+            } catch (error) {
+              console.error('서버 저장 중 오류:', error);
+              alert(`서버 저장 오류: ${error.message}`);
+            }
           },
           fail: function (error) {
             console.error('❌ 사용자 정보 요청 실패:', error);
