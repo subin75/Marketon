@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../common/Header';
 import Category from '../common/Category';
 import Bottom from '../common/Bottom';
 import Fe_heart from '../Icon/Fe_heart';
+import Heart from '../Icon/Heart';
 import Loginpl from '../Popup/Loginpl';
 import "../scss/list.scss";
 
@@ -17,15 +18,15 @@ const HeartList = () => {
 
   const navigate = useNavigate();
 
+  const userEmail = localStorage.getItem("userEmail");
+
   useEffect(() => {
-    const storedEmail = localStorage.getItem("userEmail");
-    if (!storedEmail) {
+    if (!userEmail) {
       setShowLoginPopup(true);
       return;
     }
-    
-    // 좋아요 누른 항목 불러오기
-    axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${storedEmail}`)
+
+    axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`)
       .then(res => {
         if (res.data.success) {
           setLikedProducts(res.data.data);
@@ -37,31 +38,29 @@ const HeartList = () => {
         console.error('좋아요 목록 서버 통신 실패:', err);
       });
 
-    // 전체 상품 목록 불러오기
     axios.get(`${process.env.REACT_APP_URL}p_list.php`)
       .then(res => setProducts(res.data))
       .catch(err => console.error('상품 불러오기 실패:', err));
 
-    // 카테고리 목록 불러오기
     axios.get(`${process.env.REACT_APP_URL}category.php`)
       .then(res => setCategories(res.data))
       .catch(err => console.error('카테고리 불러오기 실패:', err));
-  }, []);
+  }, [userEmail]);
 
-  // 좋아요 토글 함수
   const toggleLike = (product) => {
-    const storedEmail = localStorage.getItem("userEmail");
-    if (!storedEmail) {
+    if (!userEmail) {
       setShowLoginPopup(true);
       return;
     }
 
+    const sumnal = product.p_thumb ? product.p_thumb.split(',')[0] : '';
+
     axios.post(`${process.env.REACT_APP_URL}get_likes.php`, {
-      user: storedEmail,
+      user: userEmail,
       productId: product.id,
       product_name: product.p_name,
       unit_price: product.p_price,
-      img_url: product.p_thumb ? product.p_thumb.split(',')[0] : ''
+      img_url: `${process.env.REACT_APP_IMGPATH}${sumnal}`
     })
     .then(res => {
       if (res.data.success) {
@@ -70,8 +69,8 @@ const HeartList = () => {
             product_id: String(product.id),
             product_name: product.p_name,
             unit_price: String(product.p_price),
-            img_url: product.p_thumb ? product.p_thumb.split(',')[0] : '',
-            user: storedEmail
+            img_url: sumnal,
+            user: userEmail
           }]);
         } else {
           setLikedProducts(prev => prev.filter(item => Number(item.product_id) !== product.id));
@@ -86,8 +85,18 @@ const HeartList = () => {
     });
   };
 
-  const handleProductClick = (id) => {
-    navigate(`/detail/${id}`);
+  const handleProductClick = (product, thumb) => {
+    const viewedItems = JSON.parse(localStorage.getItem('recentViewed')) || [];
+    const newItem = {
+      id: product.id,
+      name: product.p_name,
+      price: product.p_price,
+      thumb: thumb,
+    };
+    const updatedItems = [newItem, ...viewedItems.filter(item => item.id !== product.id)];
+    localStorage.setItem('recentViewed', JSON.stringify(updatedItems.slice(0, 10)));
+
+    navigate(`/detail/${product.id}`);
   };
 
   const handleCategoryChange = (cat_parent) => {
@@ -98,10 +107,8 @@ const HeartList = () => {
     navigate('/Home/List');
   };
 
-  // 좋아요한 product_id 리스트 추출
   const likedProductIds = likedProducts.map(item => Number(item.product_id));
 
-  // 좋아요 + 필터 적용된 상품 리스트
   const likedAndFiltered = products.filter(product => {
     const isLiked = likedProductIds.includes(Number(product.id));
     if (!isLiked) return false;
@@ -128,19 +135,16 @@ const HeartList = () => {
             const thumb = product.p_thumb ? product.p_thumb.split(',')[0] : '';
             return (
               <div key={product.id} className="list-card">
-                <div 
-                  className="image-wrapper"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleProductClick(product.id)}
-                >
+                <div className="image-wrapper">
                   <img
                     src={`${process.env.REACT_APP_IMGPATH}${thumb}`}
                     className="list-img"
                     alt={product.p_name}
+                    onClick={() => handleProductClick(product, thumb)}
                   />
-                </div>
-                <div className="heart-icon2" onClick={() => toggleLike(product)}>
-                  <Fe_heart />
+                  <div className="heart-icon" onClick={() => toggleLike(product)}>
+                    <Fe_heart />
+                  </div>
                 </div>
                 <div className="list-info">
                   <div className="list-title">{product.p_name}</div>

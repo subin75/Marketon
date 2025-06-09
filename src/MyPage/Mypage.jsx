@@ -4,12 +4,10 @@ import Shopping from "../Icon/Shopping";
 import Truck from "../Icon/Truck";
 import Bottom from "../common/Bottom";
 import PhonePopup from "../Popup/PhonePopup";
-import Logout from "../Popup/Logout";
 import "../scss/mypage.scss";
 
 const Mypage = () => {
   const [showPhonePopup, setShowPhonePopup] = useState(false);
-  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const navigate = useNavigate();
@@ -33,10 +31,6 @@ const Mypage = () => {
     localStorage.removeItem("userEmail");
     setIsLoggedIn(false);
     setEmail("");
-    setShowLogoutPopup(true);
-    setTimeout(() => {
-      setShowLogoutPopup(false);
-    }, 2000);
   };
 
   return (
@@ -138,9 +132,6 @@ const Mypage = () => {
           }}
         />
       )}
-
-      {showLogoutPopup && <Logout />}
-
       <Bottom />
     </div>
   );

@@ -16,17 +16,31 @@
     .shopping-text {
         font-size: 22px;
     }
+    .join{
+        font-size: 22px;
+    }
+    .service{
+        font-size: 22px;
+    }
+    .see1{
+        font-size: 22px;
+    }
+    .use{
+        font-size: 18px;
+    }
+    .category{
+        font-size: 18px;
+    }
+    .period{
+        font-size: 18px;
+    }
+    .title{
+        font-size: 35px;
+    }
 }
   // ========================================모바일========================================
 
 @media (max-width:480px){
-    .heart-icon2 {
-        bottom: 88px;
-        right: 4px;
-    }
-    .heart-icon {
-        bottom: 0px;
-    }
     .title2{
         font-size: 22px;
     }
@@ -41,5 +55,26 @@
     }
     .question-title {
         font-size: 22px;
+    }
+    .join{
+        font-size: 22px;
+    }
+    .service{
+        font-size: 22px;
+    }
+    .see1{
+        font-size: 22px;
+    }
+    .use{
+        font-size: 18px;
+    }
+    .category{
+        font-size: 18px;
+    }
+    .period{
+        font-size: 18px;
+    }
+    .title{
+        font-size: 35px;
     }
 }

@@ -71,7 +71,7 @@ const Login2 = () => {
   return (
     <div className="body">
       <img src="/abc.jpg" alt="" />
-      <div className="back" onClick={() => navigate('/login')}>
+      <div className="back" onClick={() => navigate('/Login/login')}>
         <Back />
       </div>
 
