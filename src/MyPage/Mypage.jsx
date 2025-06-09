@@ -40,7 +40,7 @@ const Mypage = () => {
         <div
           className="top-icons"
           onClick={() => navigate("/Home/Basket")}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer"}}
         >
           <Shopping />
         </div>

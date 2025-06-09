@@ -1,10 +1,6 @@
 .mypage-container {
   padding-bottom: 100px;
 }
-.header {
-  display: flex;
-  justify-content: flex-end;
-}
 .greeting-section {
   display: flex;
   flex-direction: column;
@@ -15,6 +11,7 @@
     font-family: 'NanumSquareRound';
     font-size: 16px;
     margin-bottom: 30px;
+    margin-top: 80px;
   }
   .truck-icon {
     cursor: pointer;
@@ -87,6 +84,10 @@
 }
 .arrow-icon {
   margin-top: -25px;
+}
+.top-icons {
+  float: right;
+  cursor: pointer;
 }
 
 @import "../scss/res-marketon";
