@@ -29,25 +29,22 @@ const Kakao = () => {
     if (!window.Kakao) return;
 
     window.Kakao.Auth.login({
-      scope: 'account_email,profile_nickname',
+      scope: 'profile_nickname',
       success: function (authObj) {
         window.Kakao.API.request({
           url: '/v2/user/me',
           success: async function (res) {
             try {
-              const kakaoAccount = res.kakao_account;
-              const nickname = kakaoAccount?.profile?.nickname || '';
-              const email = kakaoAccount?.email || '';
-
+              const nickname = res.kakao_account?.profile?.nickname;
               alert(`환영합니다, ${nickname}`);
 
-              // 서버에 닉네임과 이메일 저장 요청
+              // 서버에 닉네임 저장 요청
               const response = await fetch(`${process.env.REACT_APP_URL}member.php`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nickname, email }),
+                body: JSON.stringify({ nickname }),
               });
 
               if (!response.ok) {
@@ -56,7 +53,6 @@ const Kakao = () => {
 
               // localStorage 저장
               localStorage.setItem('userNickname', nickname);
-              localStorage.setItem('userEmail', email);
 
               // 로그인 성공 후 페이지 이동
               navigate('/Home/List');
