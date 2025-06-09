@@ -30,7 +30,7 @@ const HeartList = () => {
       .then(res => {
         if (res.data.success) {
           setLikedProducts(res.data.data);
-           localStorage.setItem('likedItems', JSON.stringify(res.data.data));
+          localStorage.setItem('likedItems', JSON.stringify(res.data.data));
         } else {
           console.error('좋아요 목록 불러오기 실패:', res.data.message);
         }

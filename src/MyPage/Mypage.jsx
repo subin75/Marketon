@@ -29,6 +29,7 @@ const Mypage = () => {
 
   const handleLogoutClick = () => {
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("likedItems");
     setIsLoggedIn(false);
     setEmail("");
   };
@@ -71,15 +72,17 @@ const Mypage = () => {
         )}
       </div>
 
-      <div className="section">
-        <div className="section-title">쇼핑</div>
-        <div
-          className="section-item recent-product"
-          onClick={() => navigate("/Mypage/Seeshopping")}
-        >
-          최근 본 상품
+      {isLoggedIn && (
+        <div className="section">
+          <div className="section-title">쇼핑</div>
+          <div
+            className="section-item recent-product"
+            onClick={() => navigate("/Mypage/Seeshopping")}
+          >
+            최근 본 상품
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="section">
         <div className="section-title">고객센터</div>

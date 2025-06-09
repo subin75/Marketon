@@ -67,6 +67,23 @@ const List = () => {
   }, [query, products, selectedCategory, categories]);
 
   useEffect(() => {
+    if (!loggedInUser) return;
+
+    axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${loggedInUser}`)
+      .then(res => {
+        if (res.data.success) {
+          localStorage.setItem('likedItems', JSON.stringify(res.data.data));
+          setLikedItems(res.data.data);
+        } else {
+          console.error('좋아요 목록 불러오기 실패:', res.data.message);
+        }
+      })
+      .catch(err => {
+        console.error('좋아요 목록 서버 통신 실패:', err);
+      });
+  }, [loggedInUser]);
+
+  useEffect(() => {
     const syncLikedItems = () => {
       axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`)
         .then(res => {
@@ -130,15 +147,23 @@ const List = () => {
   };
 
   const handleProductClick = (product, thumb) => {
-    const viewedItems = JSON.parse(localStorage.getItem('recentViewed')) || [];
+    if (!loggedInUser) {
+      setShowLoginPopup(true);
+      return;
+    }
+
+    const storageKey = `recentViewed_${loggedInUser}`;
+    const viewedItems = JSON.parse(localStorage.getItem(storageKey)) || [];
+
     const newItem = {
       id: product.id,
       name: product.p_name,
       price: product.p_price,
       thumb: thumb,
     };
+
     const updatedItems = [newItem, ...viewedItems.filter(item => item.id !== product.id)];
-    localStorage.setItem('recentViewed', JSON.stringify(updatedItems.slice(0, 10)));
+    localStorage.setItem(storageKey, JSON.stringify(updatedItems.slice(0, 10)));
 
     navigate(`/detail/${product.id}`);
   };

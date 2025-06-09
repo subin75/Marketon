@@ -8,7 +8,12 @@ const Seeshopping = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('recentViewed')) || [];
+    const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) {
+      setViewedItems([]);
+      return;
+    }
+    const items = JSON.parse(localStorage.getItem(`recentViewed_${userEmail}`)) || [];
     setViewedItems(items.slice(0, 10));
   }, []);
 
