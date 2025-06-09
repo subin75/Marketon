@@ -42,7 +42,7 @@ const Kakao = () => {
     console.log('🔐 카카오 로그인 시도 중...');
 
     window.Kakao.Auth.login({
-      scope: 'profile_nickname,account_email',
+      scope: 'profile_nickname', // 이메일 권한 제거
       success: function (authObj) {
         console.log('✅ 카카오 로그인 성공:', authObj);
 
@@ -52,9 +52,9 @@ const Kakao = () => {
             console.log('✅ 사용자 정보 요청 성공:', res);
 
             const nickname = res.kakao_account?.profile?.nickname;
-            const email = res.kakao_account?.email;
+            // 이메일 권한 없으니 email은 따로 처리하지 않음
 
-            alert(`환영합니다, ${nickname} (${email})`);
+            alert(`환영합니다, ${nickname}`);
           },
           fail: function (error) {
             console.error('❌ 사용자 정보 요청 실패:', error);
