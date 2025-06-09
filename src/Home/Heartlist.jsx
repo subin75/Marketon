@@ -30,6 +30,7 @@ const HeartList = () => {
       .then(res => {
         if (res.data.success) {
           setLikedProducts(res.data.data);
+           localStorage.setItem('likedItems', JSON.stringify(res.data.data));
         } else {
           console.error('좋아요 목록 불러오기 실패:', res.data.message);
         }
@@ -103,10 +104,6 @@ const HeartList = () => {
     setSelectedCategory(cat_parent);
   };
 
-  const handleCancelPopup = () => {
-    navigate('/Home/List');
-  };
-
   const likedProductIds = likedProducts.map(item => Number(item.product_id));
 
   const likedAndFiltered = products.filter(product => {
@@ -119,7 +116,15 @@ const HeartList = () => {
   });
 
   if (showLoginPopup) {
-    return <Loginpl onCancel={handleCancelPopup} />;
+    return (
+      <Loginpl
+        onClose={() => setShowLoginPopup(false)}
+        onCancel={() => {
+          setShowLoginPopup(false);
+          navigate('/Home/List');
+        }}
+      />
+    );
   }
 
   return (

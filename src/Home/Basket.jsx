@@ -97,7 +97,12 @@ const Basket = () => {
   };
 
   if (showLoginPopup) {
-    return <Loginpl onCancel={() => setShowLoginPopup(false)} />;
+    return (
+      <Loginpl 
+        onClose={() => setShowLoginPopup(false)} 
+        onCancel={() => navigate('/Home/List')} 
+      />
+    );
   }
 
   if (cartItems.length === 0) {
@@ -109,9 +114,7 @@ const Basket = () => {
           </div>
           <div className="title2">장바구니</div>
         </div>
-        <div
-          className="no-orders"
-        >
+        <div className="no-orders">
           장바구니에 담긴 상품이 없습니다.
         </div>
       </div>

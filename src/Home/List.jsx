@@ -6,6 +6,7 @@ import Category from '../common/Category';
 import Bottom from '../common/Bottom';
 import Heart from '../Icon/Heart';
 import Fe_heart from '../Icon/Fe_heart';
+import Loginpl from '../Popup/Loginpl';
 import "../scss/list.scss";
 
 const List = () => {
@@ -18,8 +19,10 @@ const List = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // localStorage에서 로그인된 사용자 ID 가져오기
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
   const loggedInUser = localStorage.getItem('userEmail') || '';
+  const userEmail = localStorage.getItem("userEmail");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,16 +68,30 @@ const List = () => {
 
   useEffect(() => {
     const syncLikedItems = () => {
-      const saved = localStorage.getItem('likedItems');
-      setLikedItems(saved ? JSON.parse(saved) : []);
+      axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`)
+        .then(res => {
+          if (res.data.success) {
+            localStorage.setItem('likedItems', JSON.stringify(res.data.data));
+            setLikedItems(res.data.data);
+          } else {
+            console.error('좋아요 목록 불러오기 실패:', res.data.message);
+          }
+        })
+        .catch(err => {
+          console.error('좋아요 목록 서버 통신 실패:', err);
+        });
     };
 
     window.addEventListener('storage', syncLikedItems);
     return () => window.removeEventListener('storage', syncLikedItems);
   }, []);
 
-  // 서버에 좋아요 토글 요청
   const toggleLike = (product) => {
+    if (!loggedInUser) {
+      setShowLoginPopup(true);
+      return;
+    }
+
     const id = product.id;
     const sumnal = product.p_thumb ? product.p_thumb.split(',')[0] : '';
 
@@ -85,28 +102,27 @@ const List = () => {
       unit_price: product.p_price,
       img_url: `${process.env.REACT_APP_IMGPATH}${sumnal}`
     })
-    .then(res => {
-      if(res.data.success) {
-        // 서버 성공 시 로컬스토리지도 업데이트
-        setLikedItems(prev => {
-          let updated;
-          if (prev.includes(id)) {
-            updated = prev.filter(item => item !== id);
-          } else {
-            updated = [...prev, id];
-          }
-          localStorage.setItem('likedItems', JSON.stringify(updated));
-          window.dispatchEvent(new Event('storage'));
-          return updated;
-        });
-      } else {
-        alert("좋아요 처리 실패: " + res.data.message);
-      }
-    })
-    .catch(err => {
-      console.error("좋아요 요청 실패:", err);
-      alert("서버 요청 중 오류가 발생했습니다.");
-    });
+      .then(res => {
+        if (res.data.success) {
+          setLikedItems(prev => {
+            let updated;
+            if (prev.includes(id)) {
+              updated = prev.filter(item => item !== id);
+            } else {
+              updated = [...prev, id];
+            }
+            localStorage.setItem('likedItems', JSON.stringify(updated));
+            window.dispatchEvent(new Event('storage'));
+            return updated;
+          });
+        } else {
+          alert("좋아요 처리 실패: " + res.data.message);
+        }
+      })
+      .catch(err => {
+        console.error("좋아요 요청 실패:", err);
+        alert("서버 요청 중 오류가 발생했습니다.");
+      });
   };
 
   const handleCategoryChange = (cat_parent) => {
@@ -138,7 +154,7 @@ const List = () => {
         ) : (
           filteredProducts.map(product => {
             const sumnal = product.p_thumb ? product.p_thumb.split(',')[0] : '';
-            const isLiked = likedItems.includes(product.id);
+            const isLiked = likedItems.filter(item => item.product_id == product.id).length;
             return (
               <div key={product.id} className="list-card">
                 <div className="image-wrapper">
@@ -164,6 +180,14 @@ const List = () => {
       </div>
 
       <Bottom />
+      {showLoginPopup && (
+        <Loginpl 
+          onClose={() => setShowLoginPopup(false)} 
+          onCancel={() => {
+            setShowLoginPopup(false);
+          }} 
+        />
+      )}
     </div>
   );
 };
