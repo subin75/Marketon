@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Back from "../Icon/Back";
 import Loginsuccess from "../Popup/Loginsuccess";
@@ -29,6 +29,11 @@ const Sign = () => {
 
       if (result.status === "success") {
         setShowPopup(true);
+
+        // 2초 후 로그인 페이지로 이동
+        setTimeout(() => {
+          navigate("/Login/login");
+        }, 2000);
       } else {
         alert(result.message || "회원가입 실패");
       }
