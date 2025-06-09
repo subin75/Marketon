@@ -37,7 +37,11 @@ const Kakao = () => {
           url: '/v2/user/me',
           success: function (res) {
             const nickname = res.kakao_account?.profile?.nickname;
+
             alert(`환영합니다, ${nickname}`);
+
+            // 로그인 성공 시 닉네임 localStorage 저장
+            localStorage.setItem('userNickname', nickname);
 
             // 로그인 성공 시 list 페이지로 이동
             navigate('/Home/List');
