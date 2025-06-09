@@ -27,7 +27,7 @@ const Sign = () => {
 
       if (result.status === "success") {
         alert("회원가입 성공!");
-        navigate("/login");
+        navigate("/Login/login");
       } else {
         alert(result.message || "회원가입 실패");
       }
@@ -39,7 +39,7 @@ const Sign = () => {
 
   return (
     <div className="body">
-      <div className="back" onClick={() => navigate('/login')}>
+      <div className="back" onClick={() => navigate(-1)}>
         <Back />
       </div>
 
