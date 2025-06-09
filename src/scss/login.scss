@@ -53,11 +53,14 @@
 }
 .signup-wrapper {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 25px;
   font-family: 'NanumSquareRound';
-  font-size: 13px;
+  font-size: 14px;
   color: #888;
+  width: 100%;
+  max-width: 390px;
 }
 .login-text {
   cursor: default;

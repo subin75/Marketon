@@ -4,18 +4,18 @@ import axios from 'axios';
 import Close from "../Icon/Close";
 import Check from "../Icon/Check";
 import Nocheck from "../Icon/Nocheck";
-import Loginpl from "../Popup/Loginpl"; // 추가
+import Loginpl from "../Popup/Loginpl"; 
 import "../scss/basket.scss";
 
 const Basket = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [showLoginPopup, setShowLoginPopup] = useState(false); // 추가
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const navigate = useNavigate();
   const loggedInUser = localStorage.getItem('userEmail') || '';
 
   useEffect(() => {
     if (!loggedInUser) {
-      setShowLoginPopup(true); // alert 대신 팝업 표시
+      setShowLoginPopup(true);
       return;
     }
 
@@ -100,7 +100,23 @@ const Basket = () => {
     return <Loginpl onCancel={() => setShowLoginPopup(false)} />;
   }
 
-  if (cartItems.length === 0) return <div>장바구니에 담긴 상품이 없습니다.</div>;
+  if (cartItems.length === 0) {
+    return (
+      <div className="body">
+        <div className="header">
+          <div onClick={handleCloseClick} style={{ cursor: "pointer" }}>
+            <Close />
+          </div>
+          <div className="title2">장바구니</div>
+        </div>
+        <div
+          className="no-orders"
+        >
+          장바구니에 담긴 상품이 없습니다.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="body">
@@ -129,7 +145,11 @@ const Basket = () => {
             </div>
 
             {item.img && (
-              <img src={`${process.env.REACT_APP_IMGPATH}${item.img}`} className="product-image2" alt={item.name} />
+              <img
+                src={`${process.env.REACT_APP_IMGPATH}${item.img}`}
+                className="product-image2"
+                alt={item.name}
+              />
             )}
 
             <div className="product-details2">

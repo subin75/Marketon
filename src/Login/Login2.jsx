@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Back from "../Icon/Back";
 import LoginPopup from "../Popup/LoginPopup";
 import PwPopup from "../Popup/PwPopup";
 import IdPopup from "../Popup/IdPopup";
@@ -69,13 +68,11 @@ const Login2 = () => {
   };
 
   return (
-    <div className="body">
+    <div className="login-body">
       <img src="/abc.jpg" alt="" />
       <div className="back" onClick={() => navigate('/Login/login')}>
-        <Back />
       </div>
 
-      <div className="join">로그인</div>
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="label">아이디</div>
         <input
