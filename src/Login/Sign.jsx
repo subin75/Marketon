@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Back from "../Icon/Back";
+import Loginsuccess from "../Popup/Loginsuccess";
 import "../scss/sign.scss";
 
 const Sign = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -26,8 +28,7 @@ const Sign = () => {
       console.log("서버 응답:", result);
 
       if (result.status === "success") {
-        alert("회원가입 성공!");
-        navigate("/Login/login");
+        setShowPopup(true);
       } else {
         alert(result.message || "회원가입 실패");
       }
@@ -35,6 +36,11 @@ const Sign = () => {
       console.error("전송 오류:", error);
       alert("회원가입 중 오류 발생!");
     }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    navigate("/Login/login");
   };
 
   return (
@@ -67,6 +73,8 @@ const Sign = () => {
 
         <button type="submit" className="login">회원가입</button>
       </form>
+
+      {showPopup && <Loginsuccess onClose={handlePopupClose} />}
     </div>
   );
 };
