@@ -30,10 +30,9 @@ const Sign = () => {
       if (result.status === "success") {
         setShowPopup(true);
 
-        // 2초 후 로그인 페이지로 이동
         setTimeout(() => {
           navigate("/Login/login");
-        }, 2000);
+        }, 1500);
       } else {
         alert(result.message || "회원가입 실패");
       }
