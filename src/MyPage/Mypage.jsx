@@ -8,14 +8,15 @@ import "../scss/mypage.scss";
 
 const Mypage = () => {
   const [showPhonePopup, setShowPhonePopup] = useState(false);
-  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedNickname = localStorage.getItem("userNickname");
-    if (storedNickname) {
-      setNickname(storedNickname);
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      const nameOnly = storedEmail.split("@")[0];
+      setEmail(nameOnly);
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -23,13 +24,13 @@ const Mypage = () => {
   }, []);
 
   if (isLoggedIn === null) {
-    return null; // 로딩 중
+    return null;
   }
 
   const handleLogoutClick = () => {
-    localStorage.removeItem("userNickname");
+    localStorage.removeItem("userEmail");
     setIsLoggedIn(false);
-    setNickname("");
+    setEmail("");
   };
 
   return (
@@ -48,7 +49,7 @@ const Mypage = () => {
         {isLoggedIn ? (
           <>
             <div className="greeting-text">
-              {nickname ? `${nickname}님 안녕하세요!` : "안녕하세요!"}
+              {email ? `${email}님 안녕하세요!` : "안녕하세요!"}
             </div>
             <div
               className="truck-icon"
