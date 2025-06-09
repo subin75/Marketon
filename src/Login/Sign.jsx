@@ -32,7 +32,7 @@ const Sign = () => {
 
         setTimeout(() => {
           navigate("/Login/login");
-        }, 1500);
+        }, 1000);
       } else {
         alert(result.message || "회원가입 실패");
       }

@@ -9,7 +9,7 @@ const Pay = ({ onClose }) => {
     const timer = setTimeout(() => {
       if (onClose) onClose();
       navigate('/Home/List');
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [navigate, onClose]);

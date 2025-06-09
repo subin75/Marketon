@@ -73,7 +73,7 @@ const Cancle = () => {
       setTimeout(() => {
         setShowPopup(false);
         navigate("/Home/List");
-      }, 2000);
+      }, 1000);
     }
   };
 
