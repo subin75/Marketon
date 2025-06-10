@@ -24,8 +24,6 @@ const Category = ({ onCategoryChange, product }) => {
             .then((res) => {
                 const data = res.data;
 
-                console.log(data)
-
                 const filtered = data
                     .filter(item => CATEGORY_MAP[item.cat_parent])
                     .map(item => ({
