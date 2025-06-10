@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../common/Header';
-import Category from '../common/Category';
+import Category2 from '../common/Category2';
 import Bottom from '../common/Bottom';
 import Fe_heart from '../Icon/Fe_heart';
 import Heart from '../Icon/Heart';
@@ -130,7 +130,7 @@ const HeartList = () => {
   return (
     <div className="body">
       <Header />
-      <Category onCategoryChange={handleCategoryChange} />
+      <Category2 onCategoryChange={handleCategoryChange} />
 
       <div className="list-list">
         {likedAndFiltered.length === 0 ? (

@@ -43,7 +43,6 @@ const Detail = () => {
   }, [id]);
 
   const toggleLike = () => {
-    // 로그인 안 되어 있으면 로그인 팝업 띄우기
     if (!userEmail) {
       setShowLoginModal(true);
       return;

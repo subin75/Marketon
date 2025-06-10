@@ -1,7 +1,7 @@
 import React from 'react';
 import "../scss/canclepop.scss";
 
-const BasketPopup = () => {
+const Loginsuccess = () => {
   return (
     <div className="popup-overlay">
       <div className="cancel-popup">
@@ -11,4 +11,4 @@ const BasketPopup = () => {
   );
 };
 
-export default BasketPopup;
+export default Loginsuccess;

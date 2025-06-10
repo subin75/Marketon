@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Close from "../Icon/Close";
 import Check from "../Icon/Check";
@@ -6,6 +6,7 @@ import Nocheck from "../Icon/Nocheck";
 import Check2 from "../Icon/Check2";
 import Fe_check2 from "../Icon/Fe_check2";
 import Pay from "../Popup/Pay";
+import Keep from "../Popup/Keep";
 import "../scss/payment.scss";
 
 const Payment = () => {
@@ -20,8 +21,25 @@ const Payment = () => {
     paymentTerms: false,
   });
   const [showPayPopup, setShowPayPopup] = useState(false);
+  const [showKeepPopup, setShowKeepPopup] = useState(false);
+  const [activeTab, setActiveTab] = useState("간편결제");
+
+  const [recipient, setRecipient] = useState('');
+  const [phone, setPhone] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [address, setAddress] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
 
   const userEmail = localStorage.getItem('userEmail');
+
+  useEffect(() => {
+    if (showKeepPopup) {
+      const timer = setTimeout(() => {
+        setShowKeepPopup(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [showKeepPopup]);
 
   if (!userEmail) {
     alert("로그인이 필요합니다.");
@@ -52,9 +70,25 @@ const Payment = () => {
     setAgreedMain(Object.values(updated).every(Boolean));
   };
 
+  const handlePostcodeSearch = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        setZipcode(data.zonecode);
+        const fullAddr = data.roadAddress || data.jibunAddress || '';
+        setAddress(fullAddr);
+        setDetailAddress('');
+      }
+    }).open();
+  };
+
   const handlePaymentClick = () => {
     if (!Object.values(agreements).every(Boolean)) {
       alert("모든 필수 약관에 동의해주세요.");
+      return;
+    }
+
+    if (!recipient || !phone || !zipcode || !address) {
+      setShowKeepPopup(true);
       return;
     }
 
@@ -82,12 +116,18 @@ const Payment = () => {
       },
       body: JSON.stringify({
         userEmail,
-        orders: ordersForServer
+        orders: ordersForServer,
+        delivery: {
+          recipient,
+          phone,
+          zipcode,
+          address,
+          detailAddress
+        }
       })
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         if (data.success) {
           const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
 
@@ -115,6 +155,10 @@ const Payment = () => {
   const closePayPopup = () => {
     setShowPayPopup(false);
     navigate('/');
+  };
+
+  const closeKeepPopup = () => {
+    setShowKeepPopup(false);
   };
 
   const handleCloseClick = () => {
@@ -156,6 +200,73 @@ const Payment = () => {
         ))}
       </div>
 
+      <div className="section-divider" />
+      <div className="address-header">배송지</div>
+
+      <div className="delivery-form">
+        <input
+          className="address-input"
+          type="text"
+          placeholder="받는 분 *"
+          value={recipient}
+          onChange={e => setRecipient(e.target.value)}
+          />
+          <input
+          className="address-input"
+          type="text"
+          placeholder="연락처 *"
+          value={phone}
+          onChange={e => setPhone(e.target.value)}
+          />
+          <div className="zipcode-container">
+          <input
+          className="zipcode-input"
+          type="text"
+          placeholder="우편번호 *"
+          value={zipcode}
+          readOnly
+          />
+          <button
+          className="zipcode-button"
+          onClick={handlePostcodeSearch}
+          type="button"
+          >
+          우편번호 검색
+          </button>
+        </div>
+        <input
+          className="address-input"
+          type="text"
+          placeholder="주소"
+          value={address}
+          readOnly
+        />
+        <input
+          className="address-input"
+          type="text"
+          placeholder="상세주소"
+          value={detailAddress}
+          onChange={e => setDetailAddress(e.target.value)}
+        />
+      </div>
+
+      <div className="section-divider" />
+      <div className="payment-method">
+        <div className="payment-method-header">결제수단</div>
+        <div className="payment-tabs">
+          {["간편결제", "카드", "현금", "휴대폰"].map(tab => (
+            <button
+              key={tab}
+              className={`tab1 ${activeTab === tab ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab)}
+              type="button"
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="payment-summary">
         <div className="summary-label">결제 금액</div>
         <div className="summary-row">
@@ -195,9 +306,8 @@ const Payment = () => {
         결제하기
       </button>
 
-      {showPayPopup && (
-        <Pay onClose={closePayPopup} orders={orders} />
-      )}
+      {showPayPopup && <Pay onClose={closePayPopup} orders={orders} />}
+      {showKeepPopup && <Keep onClose={closeKeepPopup} />}
     </div>
   );
 };

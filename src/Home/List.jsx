@@ -54,15 +54,18 @@ const List = () => {
       setFilteredProducts(searched);
     } else {
       if (selectedCategory === 0) {
-        setFilteredProducts(products);
-      } else {
-        const filtered = products.filter(product => {
-          const productCategory = categories.find(cat => String(cat.id) === String(product.cat_id));
-          if (!productCategory) return false;
-          return String(productCategory.cat_parent) === String(selectedCategory);
-        });
-        setFilteredProducts(filtered);
-      }
+  setFilteredProducts(products);
+} else {
+  const filtered = products.filter(product => {
+    const productCategory = categories.find(cat => String(cat.id) === String(product.cat_id));
+    if (!productCategory) return false;
+    return (
+      String(productCategory.cat_parent) === String(selectedCategory) || 
+      String(productCategory.id) === String(selectedCategory)
+    );
+  });
+  setFilteredProducts(filtered);
+}
     }
   }, [query, products, selectedCategory, categories]);
 
@@ -171,7 +174,7 @@ const List = () => {
   return (
     <div className="body">
       <Header />
-      {!query && <Category onCategoryChange={handleCategoryChange} />}
+      {!query && <Category product={products} onCategoryChange={handleCategoryChange} />}
 
       <div className="list-list">
         {filteredProducts.length === 0 ? (
