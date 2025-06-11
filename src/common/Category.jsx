@@ -23,7 +23,6 @@ const Category = ({ onCategoryChange }) => {
         axios.get(`${process.env.REACT_APP_URL}/category.php`)
             .then((res) => {
                 const data = res.data;
-
                 const filtered = data
                     .filter(item => CATEGORY_MAP[item.cat_parent])
                     .map(item => ({
