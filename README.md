@@ -155,4 +155,4 @@ https://marketon-nu.vercel.app/
 
  1. 장바구니에서 결제하기 창으로 넘어가는 과정에서 한 상품의 갯수가 2개인데 하나로 측정되서 총 금액이 뜨는 이슈 발생
     
-       ⇒ **해결방법**: const totalPrice = orders.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);를 추가하여 각 item의 unitPrice (단가)와 quantity (수량)을 곱해서 개별 상품의 총 금액을 계산하고, 이                         를 sum에 더하게 하여 해결하였습니다.
+       ⇒ **해결방법**: const totalPrice = orders.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);를 추가하여 각 item의 unitPrice (단가)와 quantity (수량)을 곱해서 개별 상품의 총 금액을 계산하고, 이                        를 sum에 더하게 하여 해결하였습니다.
