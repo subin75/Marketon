@@ -147,3 +147,31 @@ https://marketon-nu.vercel.app/
 | **Vercel** | **서버리스 플랫폼** |![vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)|
 | **Figma** | **디자인 & UI/UX**|![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white) |
 
+<hr>
+
+# 개발 상세
+  
+## 💥 트러블 슈팅
+
+ 1. 처음에는 단일 이미지로 올라갈 수 있게 코딩을 짜놓아서, 최대 4장까지 올라갈 수 있게 하기 위해 수정하는 과정에서 이슈 발생
+    
+       ⇒ **해결방법**: 단일 이미지였던 것을 다중이미지로 바꾸면서 imageUrl에서 imageUrls로 바꾸고,<br>
+                        const formData = new FormData();<br>
+                        images.forEach(img => formData.append('images', img));<br>
+                        await axios.post('/api/post/images', formData<br>
+                        FormData를 이미지 배열로 되게 변경
+
+ 3. 게시물리스트에서는 하트색깔이 변경되는데 게시물디테일에서는 데이터는 넘어가는데 하트색깔이 변경되지 않는 이슈 발생
+ 
+      ⇒ **해결방법**: localStorage.post = JSON.stringify(updatedPost) localStorage의 post 파일에 있는 hasvote과 연결하여 true이면 하트색깔이 들어오고 false면 하트색깔이 안 들어오게 함
+
+ 4. 이미지를 누르면 해당 게시물로 이동하는데 거기서 좋아요를 누르면 서버로는 넘어가는데 하트색깔이 들어왔다가 초기화되는 이슈 발생
+    
+      ⇒ **해결방법**: const res = await fetch(`${process.env.REACT_APP_APIURL}/like/user-liked?userId=${userId}`);<br>
+                       const data = await res.json();<br>
+                       let hasVote = data.likedPostIds.includes(item._id) 추가하여 게시글에 유저가 좋아요를 눌렀는지 여부를 판별하여 하트색깔이 들어오게 함
+
+5. 이미지가 없는 게시물도 불러와서 이슈 발생
+
+      ⇒ **해결방법**: .filter(post => post.imageUrls && post.imageUrls[0]) 추가하여 이미지가 null값인 것은 제외
+
