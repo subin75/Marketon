@@ -22,6 +22,7 @@ const Category = ({ onCategoryChange, product }) => {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/category.php`)
             .then((res) => {
+                console.log("응답 데이터:", res.data);
                 const data = res.data;
 
                 const filtered = data
