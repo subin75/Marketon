@@ -13,7 +13,7 @@ const CATEGORY_MAP = {
     49: '수영복',
 };
 
-const Category = ({ onCategoryChange, product }) => {
+const Category = ({ onCategoryChange }) => {
     const [categories, setCategories] = useState([{ id: 0, cat_name: '전체' }]);
     const [subCategories, setSubCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState('전체');
@@ -43,7 +43,7 @@ const Category = ({ onCategoryChange, product }) => {
             });
     }, []);
 
-    const handleClick = (cat_name,cat_level) => {
+    const handleClick = (cat_name) => {
         setActiveCategory(cat_name);
 
         
@@ -60,7 +60,7 @@ const Category = ({ onCategoryChange, product }) => {
         }
     };
 
-    const handleSubCategoryClick = (subCategoryId, subCategoryName, cat_level) => {
+    const handleSubCategoryClick = (subCategoryId, subCategoryName) => {
         setActiveCategory(subCategoryName);
         
         if (onCategoryChange) {
