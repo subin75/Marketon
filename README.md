@@ -21,7 +21,7 @@ https://marketon-nu.vercel.app/
 
 ### 2. 목표
 
-* php를 활용해 상품을 등록하고 카테고리별로 구분하여 사용자 서비스 제공.
+* php를 활용해 상품을 등록하고 카테고리별로 구분하여 사용자 서비스 제공
 * 다양한 정보 및 장바구니 기능을 통해 사용자들의 편의성 향상
 
 ### 3. 핵심 기능
@@ -63,11 +63,14 @@ https://marketon-nu.vercel.app/
 ### 2. 장바구니
 * php를 활용하여 사용자별 장바구니 정보 저장
 
-### 3. 좋아요
-* 좋아요 기능
-* 사용자 별 좋아요 누른 상품 정보 제공공
+### 3. 검색
+* 사용자가 원하는 상품을 쉽게 찾을 수 있게 제공
 
-### 4. 마이페이지
+### 4. 좋아요
+* 좋아요 기능
+* 사용자 별 좋아요 누른 상품 정보 제공
+
+### 5. 마이페이지
 * 주문내역
   * 사용자가 구매한 상품을 조회하고, 3일동안은 상품 주문취소 서비스 제공
 * 최근 본 상품 목록 조회
@@ -79,51 +82,30 @@ https://marketon-nu.vercel.app/
 ## 🗂️ 폴더 구조
 
 ```
-📂Jeju
-┣ 📂Jeju-trip                 # 떠나봅서 ( Front-End 프로젝트 )
+📂Marketon
+┣ 📂Marketon                 # Marketon ( Front-End 프로젝트 )
 ┃ ┣ 📂public
 ┃ ┃ ┣ 📂imgs
-┃ ┃ ┃ ┗ 📂_icons
 ┃ ┣ 📂src
-┃ ┃ ┣ 📂component             # 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂_common             # 공통 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂00-login            # 로그인 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂00-search           # 검색 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂01-home             # 홈 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂02-trip                 
-┃ ┃ ┃ ┃ ┣ 📂tripDetail        # 장소 디테일 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┗ 📂tripList          # 장소 리스트 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂03-community
-┃ ┃ ┃ ┃ ┣ 📂comment           # 댓글 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┣ 📂img               # 갤러리 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┗ 📂post              # 게시물 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂04-planner
-┃ ┃ ┃ ┃ ┣ 📂calendar          # 달력 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┣ 📂plannerDateil     # 내 일정 디테일 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┣ 📂search            # 장소추가 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┣ 📂ticket            # 내 여행 일정의 하루 단위 티켓 컴포넌트 폴더
-┃ ┃ ┃ ┃ ┗ 📂weather           # 내 여행 내 오늘~10일까지 날씨 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂05-mypage
-┃ ┃ ┃ ┣ 📂icons
-┃ ┃ ┃ ┗ 📂popups              # 팝업 컴포넌트 폴더
-┃ ┃ ┣ 📂pages                 # 각 페이지 컴포넌트 폴더
-┃ ┃ ┃ ┣ 📂00-search
-┃ ┃ ┃ ┣ 📂01-home
-┃ ┃ ┃ ┣ 📂02-trip
-┃ ┃ ┃ ┣ 📂03-community 
-┃ ┃ ┃ ┣ 📂04-planner
-┃ ┃ ┃ ┣ 📂05-mypage
-┃ ┃ ┃ ┃ ┗ 📂check             # 체크리스트 페이지
-┃ ┃ ┃ ┗ 📜Splash.jsx          # 인트로 페이지
-┃ ┃ ┣ 📂styles                # scss
-┃ ┃ ┣ 📂utils                 # 로그아웃.js
-┃ ┣ 📜api.js                  # zustand 전역 상태 관리
+┃ ┃ ┣ 📂Agree                 # 이용약관 폴더
+┃ ┃ ┣ 📂Common                # 공통폴더
+┃ ┃ ┣ 📂Home                             
+┃ ┃ ┣ 📂Icon                  # Icon 컴포넌트
+┃ ┃ ┣ 📂Login                 # 로그인 폴더
+┃ ┃ ┣ 📂MyPage
+┃ ┃ ┣ 📂Popup                 # 팝업 폴더
+┃ ┃ ┣ 📂scss                  # scss
 ┃ ┗ 📜App.js                  # 프로젝트의 전체 라우팅 및 최상위 컴포넌트
 ┣ ⚙️.env
 ┗ README.md
-┣ 📂Jeju-server               # 떠나봅서 ( Back-End 프로젝트 )
-┃ ┣ 📂api                     # API 호출 및 가공하는 라우터 폴더
-┃ ┣ 📜index.js                # 서버의 메인 파일, 라우터를 연결하고 서버를 실행
+┣ 📂Marketon-server               # Marketon ( Back-End 프로젝트 )
+┃ ┣ 📂api                         # API 호출 및 가공하는 라우터 폴더
+┃ ┃ ┣ 📜category.php              # 카테고리 서버
+┃ ┃ ┣ 📜get_likes.php             # 좋아요 서버
+┃ ┃ ┣ 📜member.php                # 회원가입 서버
+┃ ┃ ┣ 📜p_list.php                # 상품 서버
+┃ ┃ ┣ 📜save_cart.php             # 장바구니 서버
+┃ ┃ ┣ 📜save_order.php            # 주문 서버
 ┗ ┗ ⚙️.env
 ```
 
