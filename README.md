@@ -1,7 +1,7 @@
 
 
 # <p><img src="https://github.com/user-attachments/assets/e459198c-84af-4658-a131-a97d380fca1e" alt="Image" style="vertical-align: middle;" /> Marketon</p>
-쇼핑몰에서 다양한 상품을 탐색하고 구경할 수 있는 웹사이트, <b>"Marketon"</b> 입니다.
+쇼핑몰에서 다양한 상품을 탐색하고 구경할 수 있는 웹사이트 입니다.
 
 php를 활용하여 상품을 등록해서 <br>
 쇼핑몰 이용자들이 쉽게 정보를 수집하고 즐겁게 쇼핑을 할 수 있는 웹 서비스입니다. <br>
