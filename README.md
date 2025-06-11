@@ -1,6 +1,6 @@
 
 
-# <p><img src="https://github.com/user-attachments/assets/e459198c-84af-4658-a131-a97d380fca1e" alt="Image" style="vertical-align: middle;" />
+# <p><img src="https://github.com/user-attachments/assets/e459198c-84af-4658-a131-a97d380fca1e" alt="Image" width="300" height="200" style="vertical-align: middle;" />
 쇼핑몰에서 다양한 상품을 탐색하고 구경할 수 있는 웹사이트, <b>"Marketon"</b>  입니다.
 
 php를 활용하여 상품을 등록해서 <br>
