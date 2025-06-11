@@ -7,6 +7,7 @@ import Bottom from '../common/Bottom';
 import Fe_heart from '../Icon/Fe_heart';
 import Heart from '../Icon/Heart';
 import Loginpl from '../Popup/Loginpl';
+import LoadingPopup from '../Popup/LoadingPopup';
 import "../scss/list.scss";
 
 const HeartList = () => {
@@ -16,6 +17,7 @@ const HeartList = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const userEmail = localStorage.getItem("userEmail");
@@ -23,30 +25,37 @@ const HeartList = () => {
   useEffect(() => {
     if (!userEmail) {
       setShowLoginPopup(true);
+      setIsLoading(false);
       return;
     }
 
-    axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`)
-      .then(res => {
-        if (res.data.success) {
-          setLikedProducts(res.data.data);
-          setLikedProductIds(res.data.data.map(item => Number(item.product_id))); // 업데이트
-          localStorage.setItem('likedItems', JSON.stringify(res.data.data));
+    const fetchAllData = async () => {
+      try {
+        const [likesRes, productsRes, categoriesRes] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`),
+          axios.get(`${process.env.REACT_APP_URL}p_list.php`),
+          axios.get(`${process.env.REACT_APP_URL}category.php`)
+        ]);
+
+        // 좋아요 목록
+        if (likesRes.data.success) {
+          setLikedProducts(likesRes.data.data);
+          setLikedProductIds(likesRes.data.data.map(item => Number(item.product_id)));
+          localStorage.setItem('likedItems', JSON.stringify(likesRes.data.data));
         } else {
-          console.error('좋아요 목록 불러오기 실패:', res.data.message);
+          console.error('좋아요 목록 불러오기 실패:', likesRes.data.message);
         }
-      })
-      .catch(err => {
-        console.error('좋아요 목록 서버 통신 실패:', err);
-      });
 
-    axios.get(`${process.env.REACT_APP_URL}p_list.php`)
-      .then(res => setProducts(res.data))
-      .catch(err => console.error('상품 불러오기 실패:', err));
+        setProducts(productsRes.data);
+        setCategories(categoriesRes.data);
+      } catch (err) {
+        console.error('데이터 불러오기 실패:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    axios.get(`${process.env.REACT_APP_URL}category.php`)
-      .then(res => setCategories(res.data))
-      .catch(err => console.error('카테고리 불러오기 실패:', err));
+    fetchAllData();
   }, [userEmail]);
 
   const toggleLike = (product) => {
@@ -137,7 +146,9 @@ const HeartList = () => {
       <Category2 onCategoryChange={handleCategoryChange} />
 
       <div className="list-list">
-        {likedAndFiltered.length === 0 ? (
+        {isLoading ? (
+          <LoadingPopup />
+        ) : likedAndFiltered.length === 0 ? (
           <p>좋아요한 상품이 없습니다.</p>
         ) : (
           likedAndFiltered.map(product => {

@@ -6,7 +6,7 @@ import Category from '../common/Category';
 import Bottom from '../common/Bottom';
 import Heart from '../Icon/Heart';
 import Fe_heart from '../Icon/Fe_heart';
-import Loginpl from '../Popup/Loginpl';
+import LoadingPopup from '../Popup/LoadingPopup';
 import "../scss/list.scss";
 
 const List = () => {
@@ -18,8 +18,8 @@ const List = () => {
     const saved = localStorage.getItem('likedItems');
     return saved ? JSON.parse(saved) : [];
   });
-
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const loggedInUser = localStorage.getItem('userEmail') || '';
   const userEmail = localStorage.getItem("userEmail");
@@ -29,21 +29,29 @@ const List = () => {
   const params = new URLSearchParams(location.search);
   const query = params.get('query');
 
+  // 카테고리 가져오기
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_URL}category.php`)
       .then(res => setCategories(res.data))
       .catch(err => console.error('카테고리 불러오기 실패:', err));
   }, []);
 
+  // 상품 리스트 가져오기
   useEffect(() => {
+    setLoading(true);
     axios.get(`${process.env.REACT_APP_URL}p_list.php`)
       .then(res => {
         setProducts(res.data);
         setFilteredProducts(res.data);
+        setLoading(false);
       })
-      .catch(err => console.error("게시물 불러오기 실패:", err));
+      .catch(err => {
+        console.error("게시물 불러오기 실패:", err);
+        setLoading(false);
+      });
   }, []);
 
+  // 필터링
   useEffect(() => {
     if (!products.length) return;
 
@@ -54,21 +62,22 @@ const List = () => {
       setFilteredProducts(searched);
     } else {
       if (selectedCategory === 0) {
-  setFilteredProducts(products);
-} else {
-  const filtered = products.filter(product => {
-    const productCategory = categories.find(cat => String(cat.id) === String(product.cat_id));
-    if (!productCategory) return false;
-    return (
-      String(productCategory.cat_parent) === String(selectedCategory) || 
-      String(productCategory.id) === String(selectedCategory)
-    );
-  });
-  setFilteredProducts(filtered);
-}
+        setFilteredProducts(products);
+      } else {
+        const filtered = products.filter(product => {
+          const productCategory = categories.find(cat => String(cat.id) === String(product.cat_id));
+          if (!productCategory) return false;
+          return (
+            String(productCategory.cat_parent) === String(selectedCategory) || 
+            String(productCategory.id) === String(selectedCategory)
+          );
+        });
+        setFilteredProducts(filtered);
+      }
     }
   }, [query, products, selectedCategory, categories]);
 
+  // 좋아요 목록 가져오기
   useEffect(() => {
     if (!loggedInUser) return;
 
@@ -77,15 +86,12 @@ const List = () => {
         if (res.data.success) {
           localStorage.setItem('likedItems', JSON.stringify(res.data.data));
           setLikedItems(res.data.data);
-        } else {
-          console.error('좋아요 목록 불러오기 실패:', res.data.message);
         }
       })
-      .catch(err => {
-        console.error('좋아요 목록 서버 통신 실패:', err);
-      });
+      .catch(err => console.error('좋아요 목록 서버 통신 실패:', err));
   }, [loggedInUser]);
 
+  // 좋아요 상태 동기화
   useEffect(() => {
     const syncLikedItems = () => {
       axios.get(`${process.env.REACT_APP_URL}get_likes.php?user=${userEmail}`)
@@ -93,13 +99,9 @@ const List = () => {
           if (res.data.success) {
             localStorage.setItem('likedItems', JSON.stringify(res.data.data));
             setLikedItems(res.data.data);
-          } else {
-            console.error('좋아요 목록 불러오기 실패:', res.data.message);
           }
         })
-        .catch(err => {
-          console.error('좋아요 목록 서버 통신 실패:', err);
-        });
+        .catch(err => console.error('좋아요 목록 서버 통신 실패:', err));
     };
 
     window.addEventListener('storage', syncLikedItems);
@@ -139,10 +141,7 @@ const List = () => {
           alert("좋아요 처리 실패: " + res.data.message);
         }
       })
-      .catch(err => {
-        console.error("좋아요 요청 실패:", err);
-        alert("서버 요청 중 오류가 발생했습니다.");
-      });
+      .catch(() => alert("서버 요청 중 오류가 발생했습니다."));
   };
 
   const handleCategoryChange = (cat_parent) => {
@@ -177,7 +176,9 @@ const List = () => {
       {!query && <Category product={products} onCategoryChange={handleCategoryChange} />}
 
       <div className="list-list">
-        {filteredProducts.length === 0 ? (
+        {loading ? (
+          <LoadingPopup />
+        ) : filteredProducts.length === 0 ? (
           <p>상품이 없습니다.</p>
         ) : (
           filteredProducts.map(product => {
@@ -209,11 +210,9 @@ const List = () => {
 
       <Bottom />
       {showLoginPopup && (
-        <Loginpl 
-          onClose={() => setShowLoginPopup(false)} 
-          onCancel={() => {
-            setShowLoginPopup(false);
-          }} 
+        <LoadingPopup
+          onClose={() => setShowLoginPopup(false)}
+          onCancel={() => setShowLoginPopup(false)}
         />
       )}
     </div>
