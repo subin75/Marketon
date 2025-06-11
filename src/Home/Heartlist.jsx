@@ -11,13 +11,13 @@ import "../scss/list.scss";
 
 const HeartList = () => {
   const [likedProducts, setLikedProducts] = useState([]);
+  const [likedProductIds, setLikedProductIds] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const navigate = useNavigate();
-
   const userEmail = localStorage.getItem("userEmail");
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const HeartList = () => {
       .then(res => {
         if (res.data.success) {
           setLikedProducts(res.data.data);
+          setLikedProductIds(res.data.data.map(item => Number(item.product_id))); // 업데이트
           localStorage.setItem('likedItems', JSON.stringify(res.data.data));
         } else {
           console.error('좋아요 목록 불러오기 실패:', res.data.message);
@@ -65,17 +66,22 @@ const HeartList = () => {
     })
     .then(res => {
       if (res.data.success) {
-        if (res.data.liked) {
-          setLikedProducts(prev => [...prev, {
-            product_id: String(product.id),
-            product_name: product.p_name,
-            unit_price: String(product.p_price),
-            img_url: sumnal,
-            user: userEmail
-          }]);
-        } else {
-          setLikedProducts(prev => prev.filter(item => Number(item.product_id) !== product.id));
-        }
+        const id = Number(product.id);
+        setLikedProductIds(prev =>
+          res.data.liked ? [...prev, id] : prev.filter(pid => pid !== id)
+        );
+
+        setLikedProducts(prev =>
+          res.data.liked
+            ? [...prev, {
+                product_id: String(product.id),
+                product_name: product.p_name,
+                unit_price: String(product.p_price),
+                img_url: sumnal,
+                user: userEmail
+              }]
+            : prev.filter(item => Number(item.product_id) !== product.id)
+        );
       } else {
         alert(`좋아요 처리 실패: ${res.data.message}`);
       }
@@ -103,8 +109,6 @@ const HeartList = () => {
   const handleCategoryChange = (cat_parent) => {
     setSelectedCategory(cat_parent);
   };
-
-  const likedProductIds = likedProducts.map(item => Number(item.product_id));
 
   const likedAndFiltered = products.filter(product => {
     const isLiked = likedProductIds.includes(Number(product.id));
@@ -148,7 +152,7 @@ const HeartList = () => {
                     onClick={() => handleProductClick(product, thumb)}
                   />
                   <div className="heart-icon" onClick={() => toggleLike(product)}>
-                    <Fe_heart />
+                    {likedProductIds.includes(Number(product.id)) ? <Fe_heart /> : <Heart />}
                   </div>
                 </div>
                 <div className="list-info">
